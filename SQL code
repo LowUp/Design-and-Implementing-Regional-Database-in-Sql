@@ -1,1 +1,52 @@
+alter session set NLS_DATE_FORMAT = 'DD-MON-RR';
+set feedback off
+set term on
+ 
+prompt
+prompt Tables and sequences for Video database dropped.
 
+prompt
+prompt Creating and populating tables and sequences for Video database.  
+prompt Please wait.
+set term off
+
+DROP TABLE VIDEO cascade constraints;
+DROP SEQUENCE ID;
+DROP SEQUENCE Letter;
+
+CREATE TABLE VIDEO (
+ ID					varchar(4) NOT NULL,
+ TITLE				varchar(14) NOT NULL,
+ UPLOAD_DATE		DATE NOT NULL,
+ TAGS				varchar(10),
+ NUMBER_OF_VIEWS	NUMBER,
+ CHANNEL_NUMBER		varchar(10) NOT NULL,
+ /*CONSTRAINT CHANNEL_FOREIGN_KEY FOREIGN KEY ( CHANNEL_NUMBER) REFERENCES CHANNEL (CHANNEL_NUMBER),*/
+ CONSTRAINT VIDEO_PRIMARY_KEY PRIMARY KEY (ID));
+
+ 
+CREATE SEQUENCE ID
+INCREMENT BY 1
+START WITH 12
+NOCACHE;
+
+CREATE SEQUENCE Letter
+INCREMENT BY 1
+START WITH 'a'
+NOCACHE;
+
+INSERT INTO VIDEO VALUES (CONCAT(Letter.NEXTVAL , ID.NEXTVAL), 'VideoNo1', '24-FEB-2020', 'dis', 0,'32');  
+INSERT INTO VIDEO VALUES (CONCAT(chr(ascii('a') + Letter) , ID.NEXTVAL), 'VideoNo2', '24-FEB-2020', 'dis', 0,'32');  
+
+
+/*CREATE VIEW REL AS
+SELECT REPID, ORD.CUSTID, CUSTOMER.NAME CUSTNAME, PRODUCT.PRODID,
+*/
+
+
+set term on
+set feedback on
+prompt
+prompt Tables and sequences for Video database 
+prompt created and populated.
+prompt
